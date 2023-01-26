@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+}
+
+.main-bg {
+  height: 400px;
+  background-image: url('../public/img/bg.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.shoes_card {
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 16px;
+  margin: 16px;
+  padding: 24px 0;
+  cursor: pointer;
+}
+
+.input {
+  margin-bottom: 12px;
+  width: 120px;
+  height: 38px;
+  padding: 0 8px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 8px;
+}
