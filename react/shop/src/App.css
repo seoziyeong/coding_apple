@@ -9,14 +9,6 @@
   background-position: center;
 }
 
-.shoes_card {
-  border: 1px solid rgb(210, 210, 210);
-  border-radius: 16px;
-  margin: 16px;
-  padding: 24px 0;
-  cursor: pointer;
-}
-
 .input {
   margin-bottom: 12px;
   width: 120px;
@@ -24,4 +16,13 @@
   padding: 0 8px;
   border: 1px solid rgb(200, 200, 200);
   border-radius: 8px;
+}
+
+/* 애니메이션 동작 */
+.start {
+  opacity: 0;
+}
+.end {
+  opacity: 1;
+  transition: opacity 0.7s;
 }
