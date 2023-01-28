@@ -1,8 +1,12 @@
-import { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Nav } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import { Nav, Button, Modal } from 'react-bootstrap'
+import { useDispatch } from "react-redux"
+import { addOrder } from "./../store.js"
 
 const Detail = ({shoes}) => {
+  const navigate = useNavigate();
+	let dispatch = useDispatch()
   // Param check : url 파라미터 id와 상품 고유 id가 같은 지 체크
   const {id} = useParams()
   const shoe = shoes.find((x) => x.id == id)
@@ -57,6 +61,27 @@ const Detail = ({shoes}) => {
         setFade('') // clean up
       }
     }, [tab])
+  
+  const [show, setShow] = useState(false)
+  // ^ 장바구니 버튼 modal : 리렌더링 되는 현상이 있음.
+// function StaticExample() {
+//   return (
+//     <Modal show={show} onHide={() => setShow(false)}>
+//       <Modal.Header closeButton>
+//         <Modal.Title>성공</Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>장바구니에 성공적으로 넣었다규</Modal.Body>
+//       <Modal.Footer>
+//         <Button variant="secondary" onClick={() => setShow(false)}>
+//           쇼핑 계속하기
+//         </Button>
+//         <Button variant="primary" onClick={() => {navigate('/cart')}}>
+//           장바구니로 이동
+//         </Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
 
   return (
     <div className={`container start ${fade}`}>
@@ -80,7 +105,10 @@ const Detail = ({shoes}) => {
             value={num || ""}
             onChange={(e) => setNum(e.target.value)}
           /><br/>
-          <button className="btn btn-danger">주문하기</button> 
+          <button className="btn btn-danger" onClick={() => {
+            dispatch(addOrder({shoe, num}))
+            setShow(true)
+          }}>주문하기</button> 
         </div>
       </div>
 
@@ -97,6 +125,22 @@ const Detail = ({shoes}) => {
     </Nav>
 
     <TabContent tab={tab}/>
+
+    {/* 장바구니 modal : 잘 기능 됨 */}
+    <Modal show={show} onHide={() => setShow(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>성공</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>장바구니에 성공적으로 넣었다규</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShow(false)}>
+          쇼핑 계속하기
+        </Button>
+        <Button variant="primary" onClick={() => {navigate('/cart')}}>
+          장바구니로 이동
+        </Button>
+      </Modal.Footer>
+    </Modal>
     </div> 
   )
 }

@@ -1,16 +1,16 @@
 import './App.css';
-import { createContext, useState } from 'react'
+import { useState } from 'react'
 import { Nav, Navbar, Container, Button } from 'react-bootstrap'
 import { Routes, Route, useNavigate } from "react-router-dom";
 import axios from 'axios'
 import data from './data.js'
 import Detail from './routes/Detail.js'
+import Cart from './routes/Cart.js'
 
 function App() {
   const navigate = useNavigate();
   const [shoes, setShoes] = useState(data)  // 상품 리스트
   const [showBtn, setShowBtn] = useState(true)  // 더 보기 버튼 숨기기
-  const [inventory, setInventory] = useState([10, 11, 12])
 
   // ^ 메인 UI
   function Main({shoes}) {
@@ -69,6 +69,7 @@ function App() {
             <Nav.Link onClick={() => {navigate('/')}}>HOME</Nav.Link>
             <Nav.Link onClick={() => {navigate('/detail')}}>DETAIL</Nav.Link>
             <Nav.Link onClick={() => {navigate('/event')}}>EVENT</Nav.Link>
+            <Nav.Link onClick={() => {navigate('/cart')}}>CART</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -77,6 +78,7 @@ function App() {
         <Route path="/" element={<Main shoes={shoes} />} />
         <Route path="*" element={<p>404</p>} />
         <Route path="/detail/:id" element={<Detail shoes={shoes}/>} />
+        <Route path="/cart" element={<Cart />}></Route>
       </Routes>
 
       
