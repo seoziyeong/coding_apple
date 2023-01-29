@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux"
 import { countPlus, countMinus, delOrder, delAll } from "./../store.js"
@@ -7,7 +7,6 @@ import { changeName } from './../store/user.js'
 function Cart() {
   let store = useSelector((state) => {return state})
   let mycart = store.cart
-
   let dispatch = useDispatch()
 
   return (

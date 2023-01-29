@@ -11,6 +11,16 @@ const Detail = ({shoes}) => {
   const {id} = useParams()
   const shoe = shoes.find((x) => x.id == id)
 
+  // 최근 본 상품 : watched에 id 넣기
+  useEffect(() => {
+    let watched = JSON.parse(localStorage.getItem('watched'))
+    watched.push(shoe.id)  // 접속한 Detail 페이지의 상품 id를 push
+    watched = new Set(watched) // 중복제거
+    // watched = [...watched]  // ojbect > array
+    watched = Array.from(watched)  // ojbect > array
+    localStorage.setItem('watched', JSON.stringify(watched))
+  }, [])
+
   // alert : 5초 뒤 사라지는 알럿
   let [saleAlert, setSaleAlert] = useState(true)
   useEffect(() => {
@@ -18,7 +28,10 @@ const Detail = ({shoes}) => {
     return () => {
       clearTimeout(timesale)
     }
-  }, [])
+  }, [saleAlert])
+
+  // modal
+  const [show, setShow] = useState(false)
 
   // input : 숫자 외 입력 방지
   const [num, setNum] = useState('')
@@ -62,27 +75,6 @@ const Detail = ({shoes}) => {
       }
     }, [tab])
   
-  const [show, setShow] = useState(false)
-  // ^ 장바구니 버튼 modal : 리렌더링 되는 현상이 있음.
-// function StaticExample() {
-//   return (
-//     <Modal show={show} onHide={() => setShow(false)}>
-//       <Modal.Header closeButton>
-//         <Modal.Title>성공</Modal.Title>
-//       </Modal.Header>
-//       <Modal.Body>장바구니에 성공적으로 넣었다규</Modal.Body>
-//       <Modal.Footer>
-//         <Button variant="secondary" onClick={() => setShow(false)}>
-//           쇼핑 계속하기
-//         </Button>
-//         <Button variant="primary" onClick={() => {navigate('/cart')}}>
-//           장바구니로 이동
-//         </Button>
-//       </Modal.Footer>
-//     </Modal>
-//   );
-// }
-
   return (
     <div className={`container start ${fade}`}>
       {
@@ -125,8 +117,7 @@ const Detail = ({shoes}) => {
     </Nav>
 
     <TabContent tab={tab}/>
-
-    {/* 장바구니 modal : 잘 기능 됨 */}
+    {/* 장바구니 modal */}
     <Modal show={show} onHide={() => setShow(false)}>
       <Modal.Header closeButton>
         <Modal.Title>성공</Modal.Title>
